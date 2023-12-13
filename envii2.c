@@ -35,7 +35,7 @@ int ft_unsetenv(info_t *info, char *v)
 
 	while (node)
 	{
-		ptr = ft_starts_with(node->str, var);
+		ptr = ft_starts_with(node->str, v);
 		if (ptr && *ptr == '=')
 		{
 			info->env_changed = ft_delete_node_at_index(&(info->env), i);
@@ -67,16 +67,16 @@ int ft_setenv(info_t *info, char *v, char *val)
 	if (!v || !val)
 		return (0);
 
-	buffer = malloc(ft_strlen(var) + ft_strlen(value) + 2);
+	buffer = malloc(ft_strlen(v) + ft_strlen(val) + 2);
 	if (!buffer)
 		return (1);
 	ft_strcpy(buffer, v);
 	ft_strcat(buffer, "=");
-	ft_strcat(bufffer, val);
+	ft_strcat(buffer, val);
 	node = info->env;
 	while (node)
 	{
-		p = ft_starts_with(node->str, v);
+		ptr = ft_starts_with(node->str, v);
 		if (ptr && *ptr == '=')
 		{
 			free(node->str);

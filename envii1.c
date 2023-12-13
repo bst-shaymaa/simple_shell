@@ -72,11 +72,11 @@ int ft_setenv(info_t *info, char *v, char *val)
 		return (1);
 	ft_strcpy(buffer, v);
 	ft_strcat(buffer, "=");
-	ft_strcat(buffer, value);
+	ft_strcat(buffer, val);
 	node = info->env;
 	while (node)
 	{
-		ptr = ft_starts_with(node->str, var);
+		ptr = ft_starts_with(node->str, val);
 		if (ptr && *ptr == '=')
 		{
 			free(node->str);

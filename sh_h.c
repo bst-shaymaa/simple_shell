@@ -21,7 +21,7 @@ int ft_hsh(info_t *info, char **argv)
 		r = ft_get_input(info);
 		if (r != -1)
 		{
-			ft_set_info(info, av);
+			ft_set_info(info, argv);
 			builtin_ret = ft_find_builtin(info);
 			if (builtin_ret == -1)
 				ft_find_cmd(info);

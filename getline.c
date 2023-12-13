@@ -17,7 +17,7 @@ ssize_t ft_input_buf(info_t *info, char **buffer, size_t *len)
 	{
 		free(*buffer);
 		*buffer = NULL;
-		signal(SIGINT, sigintHandler);
+		signal(SIGINT, ft_sigintHandler);
 #if USE_GETLINE
 		r = ft_getline(buffer, &len_p, stdin);
 #else
@@ -32,7 +32,7 @@ ssize_t ft_input_buf(info_t *info, char **buffer, size_t *len)
 			}
 			info->linecount_flag = 1;
 			ft_remove_comments(*buffer);
-			ft_build_history_list(info, *buf, info->histcount++);
+			ft_build_history_list(info, *buffer, info->histcount++);
 			{
 				*len = r;
 				info->cmd_buf = buffer;
@@ -76,7 +76,7 @@ ssize_t ft_get_input(info_t *info)
 		if (i >= len)
 		{
 			i = len = 0;
-			info->ft_cmd_buf_type = CMD_NORM;
+			info->cmd_buff_type = CMD_NORM;
 		}
 
 		*buffer_pt = ptr;
@@ -117,7 +117,7 @@ ssize_t ft_read_buf(info_t *info, char *buffer, size_t *size)
  */
 int ft_getline(info_t *info, char **ptr, size_t *length)
 {
-	static char buf[READ_BUF_SIZE];
+	static char buffer[READ_BUF_SIZE];
 	static size_t i, len;
 	size_t n;
 	ssize_t r = 0, s = 0;
@@ -133,16 +133,16 @@ int ft_getline(info_t *info, char **ptr, size_t *length)
 	if (r == -1 || (r == 0 && len == 0))
 		return (-1);
 
-	c = ft_strchr(buf + i, '\n');
-	n = c ? 1 + (unsigned int)(c - buf) : len;
+	c = ft_strchr(buffer + i, '\n');
+	n = c ? 1 + (unsigned int)(c - buffer) : len;
 	new_ptr = _realloc(pt, s, s ? s + n : n + 1);
 	if (!new_ptr)
 		return (pt ? free(pt), -1 : -1);
 
 	if (s)
-		ft_strncat(new_ptr, buf + i, n - i);
+		ft_strncat(new_ptr, buffer + i, n - i);
 	else
-		ft_strncpy(new_ptr, buf + i, n - i + 1);
+		ft_strncpy(new_ptr, buffer + i, n - i + 1);
 
 	s += n - i;
 	i = n;

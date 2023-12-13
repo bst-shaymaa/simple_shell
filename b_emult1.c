@@ -47,7 +47,7 @@ int ft_set_alias(info_t *info, char *str)
 {
 	char *p;
 
-	p = ft _strchr(str, '=');
+	p = ft_strchr(str, '=');
 	if (!p)
 		return (1);
 	if (!*++p)

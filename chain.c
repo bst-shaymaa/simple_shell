@@ -16,18 +16,18 @@ int ft_is_chain(info_t *info, char *buffer, size_t *ptr)
 	{
 		buffer[j] = 0;
 		j++;
-		info->ft_cmd_buffer_type = CMD_OR;
+		info->cmd_buff_type = CMD_OR;
 	}
 	else if (buffer[j] == '&' && buffer[j + 1] == '&')
 	{
 		buffer[j] = 0;
 		j++;
-		info->ft_cmd_buffer_type = CMD_AND;
+		info->cmd_buff_type = CMD_AND;
 	}
 	else if (buffer[j] == ';')
 	{
 		buffer[j] = 0;
-		info->ft_cmd_buffer_type = CMD_CHAIN;
+		info->cmd_buff_type = CMD_CHAIN;
 	}
 	else
 		return (0);
@@ -50,7 +50,7 @@ void ft_check_chain(info_t *info, char *buffer, size_t *ptr,
 {
 	size_t j = *ptr;
 
-	if (info->ft_cmd_buffer_type == CMD_AND)
+	if (info->cmd_buff_type == CMD_AND)
 	{
 		if (info->status)
 		{
@@ -58,7 +58,7 @@ void ft_check_chain(info_t *info, char *buffer, size_t *ptr,
 			j = len;
 		}
 	}
-	if (info->ft_cmd_buffer_type == CMD_OR)
+	if (info->cmd_buff_type == CMD_OR)
 	{
 		if (!info->status)
 		{

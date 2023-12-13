@@ -90,7 +90,7 @@ int ft_myalias(info_t *info)
 {
 	int i = 0;
 	char *p = NULL;
-	ft_list_t *node = NULL;
+	list_t *node = NULL;
 
 	if (info->argc == 1)
 	{

@@ -18,6 +18,19 @@
 #define CONVERT_LOWERCASE	1
 #define CONVERT_UNSIGNED	2
 
+#define CMD_NORM	0
+#define CMD_OR		1
+#define CMD_AND		2
+#define CMD_CHAIN	3
+
+#define USE_GETLINE 0
+#define USE_STRTOK 0
+
+#define HIST_FILE	".simple_shell_history"
+#define HIST_MAX	4096
+
+extern char **environ;
+
 /**
  * struct liststr - singly linked list
  * @num: the number field
@@ -71,7 +84,7 @@ typedef struct passinfo
 	int status;
 
 	char **cmd_buf;
-	int cmd_buf_type;
+	int cmd_buff_type;
 	int readfd;
 	int histcount;
 } info_t;
@@ -79,6 +92,17 @@ typedef struct passinfo
 #define INFO_INIT \
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
 	0, 0, 0}
+
+/**
+ *struct builtin - contains a builtin string and related function
+ *@type: the builtin command flag
+ *@func: the function
+ */
+typedef struct builtin
+{
+	char *type;
+	int (*func)(info_t *);
+} builtin_table;
 
 void ft_eputs(char *);
 int ft_eputchar(char);
@@ -119,6 +143,54 @@ size_t ft_list_len(const list_t *);
 char **ft_list_to_strings(list_t *);
 size_t ft_print_list(const list_t *);
 list_t *ft_node_starts_with(list_t *, char *, char);
-ssize_t ft_get_node_index(list_t *, list_t *);
+size_t ft_get_node_index(list_t *, list_t *);
+char *ft_get_history_file(info_t *info);
+int ft_write_history(info_t *info);
+int ft_read_history(info_t *info);
+int ft_build_history_list(info_t *info, char *buf, int linecount);
+int ft_renumber_history(info_t *info);
+int ft_is_cmd(info_t *info, char *path);
+char *ft_dup_chars(char *pathstr, int start, int stop);
+char *ft_find_path(info_t *info, char *pathstr, char *cmd);
+int ft_hsh(info_t *info, char **argv);
+int ft_find_builtin(info_t *info);
+void ft_find_cmd(info_t *info);
+void ft_fork_cmd(info_t *info);
+list_t *ft_add_node(list_t **head, const char *str, int num);
+size_t ft_print_list_str(const list_t *h);
+void ft_free_list(list_t **head_ptr);
+size_t ft_get_node_index(list_t *head, list_t *node);
+size_t ft_list_len(const list_t *h);
+char **ft_list_to_strings(list_t *head);
+list_t *ft_node_starts_with(list_t *node, char *prefix, char c);
+list_t *ft_add_node_end(list_t **head, const char *str, int num);
+size_t ft_print_list_str(const list_t *h);
+int ft_delete_node_at_index(list_t **head, unsigned int index);
+ssize_t ft_input_buf(info_t *info, char **buffer, size_t *len);
+ssize_t ft_get_input(info_t *info);
+ssize_t ft_read_buf(info_t *info, char *buffer, size_t *size);
+int ft_getline(info_t *info, char **ptr, size_t *length);
+void ft_sigintHandler(__attribute__((unused))int sn);
+char **ft_get_environ(info_t *info);
+int ft_unsetenv(info_t *info, char *c);
+int ft_setenv(info_t *info, char *v, char *val);
+char **ft_get_environ(info_t *info);
+int ft_unsetenv(info_t *info, char *v);
+int ft_setenv(info_t *info, char *v, char *val);
+int ft_is_chain(info_t *info, char *buffer, size_t *ptr);
+void ft_check_chain(info_t *info, char *buffer, size_t *ptr, size_t n, size_t len);
+int replace_alias(info_t *info);
+int ft_replace_vars(info_t *info);
+int ft_replace_string(char **prev, char *new);
+int ft_myhistory(info_t *info);
+int ft_unset_alias(info_t *info, char *str);
+int ft_set_alias(info_t *info, char *str);
+int ft_print_alias(list_t *node);
+int ft_myalias(info_t *info);
+
+
+
+
+
 
 #endif
