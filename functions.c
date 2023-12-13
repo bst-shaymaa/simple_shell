@@ -1,143 +1,53 @@
 #include "shell.h"
 
 /**
- * interactive - returns true if shell is interactive mode
+ * ft_interactive - returns true if shell is interactive mode
  * @info: struct address
  *
  * Return: 1 if interactive mode, 0 otherwise
  */
-int interactive(info_t *info)
+int ft_interactive(info_t *info)
 {
 	return (isatty(STDIN_FILENO) && info->readfd <= 2);
 }
 
 /**
- * is_delim - checks if character is a delimeter
- * @c: the char to check
- * @delim: the delimeter string
- * Return: 1 if true, 0 if false
- */
-int is_delim(char c, char *delim)
-{
-	while (*delim)
-		if (*delim++ == c)
-			return (1);
-	return (0);
-}
-
-/**
- *_isalpha - checks for alphabetic character
- *@c: The character to input
- *Return: 1 if c is alphabetic, 0 otherwise
- */
-
-int _isalpha(int c)
-{
-	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-		return (1);
-	else
-		return (0);
-}
-
-/**
- *_atoi - converts a string to an integer
- *@s: the string to be converted
- *Return: 0 if no numbers in string, converted number otherwise
- */
-
-int _atoi(char *s)
-{
-	int i, sign = 1, flag = 0, output;
-	unsigned int result = 0;
-
-	for (i = 0;  s[i] != '\0' && flag != 2; i++)
-	{
-		if (s[i] == '-')
-			sign *= -1;
-
-		if (s[i] >= '0' && s[i] <= '9')
-		{
-			flag = 1;
-			result *= 10;
-			result += (s[i] - '0');
-		}
-		else if (flag == 1)
-			flag = 2;
-	}
-
-	if (sign == -1)
-		output = -result;
-	else
-		output = result;
-
-	return (output);
-}
-
-/**
- * _erratoi - converts a string to an integer
- * @s: the string to be converted
- * Return: 0 if no numbers in string, converted number otherwise
- *       -1 on error
- */
-int _erratoi(char *s)
-{
-	int i = 0;
-	unsigned long int result = 0;
-
-	if (*s == '+')
-		s++;  /* TODO: why does this make main return 255? */
-	for (i = 0;  s[i] != '\0'; i++)
-	{
-		if (s[i] >= '0' && s[i] <= '9')
-		{
-			result *= 10;
-			result += (s[i] - '0');
-			if (result > INT_MAX)
-				return (-1);
-		}
-		else
-			return (-1);
-	}
-	return (result);
-}
-
-/**
- * print_error - prints an error message
+ * ft_print_error - prints an error message
  * @info: the parameter & return info struct
- * @estr: string containing specified error type
+ * @errstr: string containing specified error type
  * Return: 0 if no numbers in string, converted number otherwise
  *        -1 on error
  */
-void print_error(info_t *info, char *estr)
+void ft_print_error(info_t *info, char *errstr)
 {
-	_eputs(info->fname);
-	_eputs(": ");
+	ft_eputs(info->fname);
+	ft_eputs(": ");
 	print_d(info->line_count, STDERR_FILENO);
-	_eputs(": ");
-	_eputs(info->argv[0]);
-	_eputs(": ");
-	_eputs(estr);
+	ft_eputs(": ");
+	ft_eputs(info->argv[0]);
+	ft_eputs(": ");
+	ft_eputs(errstr);
 }
 
 /**
- * print_d - function prints a decimal (integer) number (base 10)
+ * ft_print_d - function prints a decimal (integer) number (base 10)
  * @input: the input
- * @fd: the filedescriptor to write to
+ * @fld: the filedescriptor to be writting in
  *
  * Return: number of characters printed
  */
-int print_d(int input, int fd)
+int ft_print_d(int input, int fld)
 {
-	int (*__putchar)(char) = _putchar;
+	int (*ft_putchar)(char) = ft_putchar;
 	int i, count = 0;
 	unsigned int _abs_, current;
 
-	if (fd == STDERR_FILENO)
-		__putchar = _eputchar;
+	if (fld == STDERR_FILENO)
+		ft_putchar = ft_eputchar;
 	if (input < 0)
 	{
 		_abs_ = -input;
-		__putchar('-');
+		ft_putchar('-');
 		count++;
 	}
 	else
@@ -147,47 +57,47 @@ int print_d(int input, int fd)
 	{
 		if (_abs_ / i)
 		{
-			__putchar('0' + current / i);
+			ft_putchar('0' + current / i);
 			count++;
 		}
 		current %= i;
 	}
-	__putchar('0' + current);
+	ft_putchar('0' + current);
 	count++;
 
 	return (count);
 }
 
 /**
- * convert_number - converter function, a clone of itoa
- * @num: number
- * @base: base
+ * ft_convert_number - converter function, a clone of itoa
+ * @n: number
+ * @bs: base
  * @flags: argument flags
  *
  * Return: string
  */
-char *convert_number(long int num, int base, int flags)
+char *ft_convert_number(long int n, int bs, int flags)
 {
 	static char *array;
-	static char buffer[50];
+	static char buff[50];
 	char sign = 0;
 	char *ptr;
-	unsigned long n = num;
+	unsigned long number = n;
 
-	if (!(flags & CONVERT_UNSIGNED) && num < 0)
+	if (!(flags & CONVERT_UNSIGNED) && n < 0)
 	{
-		n = -num;
+		number = -n;
 		sign = '-';
 
 	}
 	array = flags & CONVERT_LOWERCASE ? "0123456789abcdef" : "0123456789ABCDEF";
-	ptr = &buffer[49];
+	ptr = &buff[49];
 	*ptr = '\0';
 
 	do	{
-		*--ptr = array[n % base];
-		n /= base;
-	} while (n != 0);
+		*--ptr = array[n % bs];
+		number /= bs;
+	} while (number != 0);
 
 	if (sign)
 		*--ptr = sign;
@@ -195,19 +105,19 @@ char *convert_number(long int num, int base, int flags)
 }
 
 /**
- * remove_comments - function replaces first instance of '#' with '\0'
- * @buf: address of the string to modify
+ * ft_remove_comments - function replaces first instance of '#' with '\0'
+ * @buffer: address of the string to modify
  *
  * Return: Always 0;
  */
-void remove_comments(char *buf)
+void ft_remove_comments(char *buffer)
 {
 	int i;
 
-	for (i = 0; buf[i] != '\0'; i++)
-		if (buf[i] == '#' && (!i || buf[i - 1] == ' '))
+	for (i = 0; buffer[i] != '\0'; i++)
+		if (buffer[i] == '#' && (!i || buffer[i - 1] == ' '))
 		{
-			buf[i] = '\0';
+			buffer[i] = '\0';
 			break;
 		}
 }

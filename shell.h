@@ -70,8 +70,8 @@ typedef struct passinfo
 	int env_changed;
 	int status;
 
-	char **cmd_buf; /* pointer to cmd ; chain buffer, for memory mangement */
-	int cmd_buf_type; /* CMD_type ||, &&, ; */
+	char **cmd_buf;
+	int cmd_buf_type;
 	int readfd;
 	int histcount;
 } info_t;
@@ -80,57 +80,45 @@ typedef struct passinfo
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
 	0, 0, 0}
 
-/* err_string_functions.c */
-void _eputs(char *);
-int _eputchar(char);
-int _putfd(char c, int fd);
-int _putsfd(char *str, int fd);
-
-/* string_1.c */
-int _strlen(char *);
-int _strcmp(char *, char *);
-char *starts_with(const char *, const char *);
-char *_strcat(char *, char *);
-char *_strcpy(char *, char *);
-char *_strdup(const char *);
-void _puts(char *);
-int _putchar(char);
-
-/* string_2.c */
-char *_strncpy(char *, char *, int);
-char *_strncat(char *, char *, int);
-char *_strchr(char *, char);
-char **strtow(char *, char *);
-char **strtow2(char *, char);
-
-/* memory_functions */
-char *_memset(char *, char, unsigned int);
-void ffree(char **);
-void *_realloc(void *, unsigned int, unsigned int);
-int bfree(void **);
-
-/* more_functions.c */
-int interactive(info_t *);
-int is_delim(char, char *);
-int _isalpha(int);
-int _atoi(char *);
-int _erratoi(char *);
-void print_error(info_t *, char *);
-int print_d(int, int);
-char *convert_number(long int, int, int);
-void remove_comments(char *);
-
-/* liststr.c module */
-list_t *add_node(list_t **, const char *, int);
-list_t *add_node_end(list_t **, const char *, int);
-size_t print_list_str(const list_t *);
-int delete_node_at_index(list_t **, unsigned int);
-void free_list(list_t **);
-size_t list_len(const list_t *);
-char **list_to_strings(list_t *);
-size_t print_list(const list_t *);
-list_t *node_starts_with(list_t *, char *, char);
-ssize_t get_node_index(list_t *, list_t *);
-
+void ft_eputs(char *);
+int ft_eputchar(char);
+int ft_putfd(char c, int fd);
+int ft_putsfd(char *str, int fd);
+int ft_strlen(char *);
+int ft_strcmp(char *, char *);
+char *ft_starts_with(const char *, const char *);
+char *ft_strcat(char *, char *);
+char *ft_strcpy(char *, char *);
+char *ft_strdup(const char *);
+void ft_puts(char *);
+int ft_putchar(char);
+char *ft_strncpy(char *, char *, int);
+char *ft_strncat(char *, char *, int);
+char *ft_strchr(char *, char);
+char **ft_strtow(char *, char *);
+char **ft_strtow2(char *, char);
+char *ft_memset(char *, char, unsigned int);
+void ft_ffree(char **);
+void *ft_realloc(void *, unsigned int, unsigned int);
+int ft_bfree(void **);
+int ft_interactive(info_t *);
+int ft_is_delim(char, char *);
+int ft_isalpha(int);
+int ft_atoi(char *);
+int ft_erratoi(char *);
+void ft_print_error(info_t *, char *);
+int ft_print_d(int, int);
+char *ft_convert_number(long int, int, int);
+void ft_remove_comments(char *);
+list_t *ft_add_node(list_t **, const char *, int);
+list_t *ft_add_node_end(list_t **, const char *, int);
+size_t ft_print_list_str(const list_t *);
+int ft_delete_node_at_index(list_t **, unsigned int);
+void ft_free_list(list_t **);
+size_t ft_list_len(const list_t *);
+char **ft_list_to_strings(list_t *);
+size_t ft_print_list(const list_t *);
+list_t *ft_node_starts_with(list_t *, char *, char);
+ssize_t ft_get_node_index(list_t *, list_t *);
 
 #endif

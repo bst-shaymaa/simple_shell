@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- *_eputs - prints an input string
+ *ft_eputs - prints an input string
  * @str: the string to be printed
  *
  * Return: Nothing
  */
-void _eputs(char *str)
+void ft_eputs(char *str)
 {
 	int i = 0;
 
@@ -14,64 +14,64 @@ void _eputs(char *str)
 		return;
 	while (str[i] != '\0')
 	{
-		_eputchar(str[i]);
+		ft_eputchar(str[i]);
 		i++;
 	}
 }
 
 /**
- * _eputchar - writes the character c to stderr
- * @c: The character to print
+ * ft_eputchar - writes the character c to stderr
+ * @ch: The character to print
  *
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int _eputchar(char c)
+int ft_eputchar(char ch)
 {
 	static int i;
-	static char buf[WRITE_BUF_SIZE];
+	static char buffer[WRITE_BUF_SIZE];
 
 	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(2, buf, i);
+		write(2, buffer, i);
 		i = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
+	if (ch != BUF_FLUSH)
+		buffer[i++] = ch;
 	return (1);
 }
 
 /**
- * _putfd - writes the character c to given fd
- * @c: The character to print
- * @fd: The filedescriptor to write to
+ * ft_putfd - writes the character c to given fd
+ * @ch: The character to print
+ * @flds: The filedescriptor to write to
  *
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int _putfd(char c, int fd)
+int ft_putfd(char ch, int flds)
 {
 	static int i;
-	static char buf[WRITE_BUF_SIZE];
+	static char buffer[WRITE_BUF_SIZE];
 
-	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (ch == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
-		write(fd, buf, i);
+		write(flds, buffer, i);
 		i = 0;
 	}
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
+	if (ch != BUF_FLUSH)
+		buffer[i++] = ch;
 	return (1);
 }
 
 /**
- *_putsfd - prints an input string
+ * ft_putsfd - prints an input string
  * @str: the string to be printed
- * @fd: the filedescriptor to write to
+ * @fld: the filedescriptor to write to
  *
  * Return: the number of chars put
  */
-int _putsfd(char *str, int fd)
+int ft_putsfd(char *str, int fld)
 {
 	int i = 0;
 
@@ -79,7 +79,7 @@ int _putsfd(char *str, int fd)
 		return (0);
 	while (*str)
 	{
-		i += _putfd(*str++, fd);
+		i += ft_putfd(*str++, fld);
 	}
 	return (i);
 }

@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- **_memset - fills memory with a constant byte
+ **ft_memset - fills memory with a constant byte
  *@str: the pointer to the memory area
  *@b: the byte to fill *str with
  *@n: the amount of bytes to be filled
  *Return: (str) a pointer to the memory area str
  */
-char *_memset(char *str, char b, unsigned int n)
+char *ft_memset(char *str, char b, unsigned int n)
 {
 	unsigned int i;
 
@@ -17,10 +17,10 @@ char *_memset(char *str, char b, unsigned int n)
 }
 
 /**
- * ffree - frees a string of strings
+ * ft_ffree - frees a string of strings
  * @p: string of strings
  */
-void ffree(char **p)
+void ft_ffree(char **p)
 {
 	char **a = p;
 
@@ -32,14 +32,14 @@ void ffree(char **p)
 }
 
 /**
- * _realloc - reallocates a block of memory
+ * ft_realloc - reallocates a block of memory
  * @ptr: pointer to previous malloc'ated block
  * @old_size: byte size of previous block
  * @new_size: byte size of new block
  *
  * Return: pointer to da ol'block nameen.
  */
-void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
+void *ft_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	char *p;
 
@@ -62,12 +62,12 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 }
 
 /**
- * bfree - frees a pointer and NULLs the address
+ * ft_bfree - frees a pointer and NULLs the address
  * @ptr: address of the pointer to free
  *
  * Return: 1 if freed, otherwise 0.
  */
-int bfree(void **ptr)
+int ft_bfree(void **ptr)
 {
 	if (ptr && *ptr)
 	{
