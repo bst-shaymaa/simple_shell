@@ -66,7 +66,7 @@ void ft_free_info(info_t *info, int all)
 			ft_free_list(&(info->alias));
 		ft_ffree(info->environ);
 			info->environ = NULL;
-		ft_bfree((void **)info->ft_cmd_buf);
+		bfree((void **)info->cmd_buf);
 		if (info->readfd > 2)
 			close(info->readfd);
 		ft_putchar(BUF_FLUSH);

@@ -1,44 +1,52 @@
 #include "shell.h"
 
 /**
- * ft_strcmp - performs comparison of two strangs.
- * @str1: the first string
- * @str2: the second string
+ * ft_strcpy - copies a string
+ * @dest: the destination
+ * @src: the source
  *
- * Return: negative if str1 < str2, positive if str1 > str2,
- * zero if str1 == str2
+ * Return: pointer to destination
  */
-int ft_strcmp(char *str1, char *str2)
+char *ft_strcpy(char *dest, char *src)
 {
-	while (*str1 && *str2)
+	int i = 0;
+
+	if (dest == src || src == 0)
+		return (dest);
+	while (src[i])
 	{
-		if (*str1 != *str2)
-			return (*str1 - *str2);
-		str1++;
-		str2++;
+		dest[i] = src[i];
+		i++;
 	}
-	if (*str1 == *str2)
-		return (0);
-	else
-		return (*str1 < *str2 ? -1 : 1);
+	dest[i] = 0;
+	return (dest);
 }
 
 /**
- * ft_starts_with - checks if needle starts with haystack
- * @haystack: string to search
- * @needle: the substring to find
+ * _strdup - duplicates a string
+ * @str: the string to duplicate
  *
- * Return: address of next char of haystack or NULL
+ * Return: pointer to the duplicated string
  */
-char *ft_starts_with(const char *haystack, const char *needle)
+char *ft_strdup(const char *str)
 {
-	while (*needle)
-		if (*needle++ != *haystack++)
-			return (NULL);
-	return ((char *)haystack);
+	int length = 0;
+	char *ret;
+
+	if (str == NULL)
+		return (NULL);
+	while (*str++)
+		length++;
+	ret = malloc(sizeof(char) * (length + 1));
+	if (!ret)
+		return (NULL);
+	for (length++; length--;)
+		ret[length] = *--str;
+	return (ret);
 }
+
 /**
- *ft_puts - prints an input string
+ *_puts - prints an input string
  *@str: the string to be printed
  *
  * Return: Nothing
@@ -57,23 +65,23 @@ void ft_puts(char *str)
 }
 
 /**
- * ft_putchar - writes the character c to stdout
- * @ch: The character to print
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
  *
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int ft_putchar(char ch)
+int ft_putchar(char c)
 {
 	static int i;
 	static char buf[WRITE_BUF_SIZE];
 
-	if (ch == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
 	{
 		write(1, buf, i);
 		i = 0;
 	}
-	if (ch != BUF_FLUSH)
-		buf[i++] = ch;
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
 	return (1);
 }

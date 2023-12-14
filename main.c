@@ -22,9 +22,9 @@ int main(int ac, char **av)
 		fd = open(av[1], O_RDONLY);
 		if (fd == -1)
 		{
-			if (ft_errno == EACCES)
+			if (errno == EACCES)
 				exit(126);
-			if (ft_errno == ENOENT)
+			if (errno == ENOENT)
 			{
 				ft_eputs(av[0]);
 				ft_eputs(": 0: Can't open ");

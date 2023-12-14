@@ -3,36 +3,36 @@
 /**
  * ft_hsh - main shell loop
  * @info: the parameter & return info struct
- * @argv: the argument vector from main()
+ * @av: the argument vector from main()
  *
  * Return: 0 on success, 1 on error, or error code
  */
-int ft_hsh(info_t *info, char **argv)
+int ft_hsh(info_t *info, char **av)
 {
 	ssize_t r = 0;
 	int builtin_ret = 0;
 
 	while (r != -1 && builtin_ret != -2)
 	{
-		clear_info(info);
-		if (interactive(info))
+		ft_clear_info(info);
+		if (ft_interactive(info))
 			ft_puts("$ ");
 		ft_eputchar(BUF_FLUSH);
 		r = ft_get_input(info);
 		if (r != -1)
 		{
-			ft_set_info(info, argv);
+			ft_set_info(info, av);
 			builtin_ret = ft_find_builtin(info);
 			if (builtin_ret == -1)
 				ft_find_cmd(info);
 		}
 		else if (interactive(info))
 			ft_putchar('\n');
-		ft_free_info(info, 0);
+		free_info(info, 0);
 	}
 	ft_write_history(info);
 	ft_free_info(info, 1);
-	if (!interactive(info) && info->status)
+	if (!ft_interactive(info) && info->status)
 		exit(info->status);
 	if (builtin_ret == -2)
 	{
@@ -78,7 +78,7 @@ int ft_find_builtin(info_t *info)
 }
 
 /**
- * ft_find_cmd - finds a command in PATH
+ * ft_ind_cmd - finds a command in PATH
  * @info: the parameter & return info struct
  *
  * Return: void
@@ -108,8 +108,8 @@ void ft_find_cmd(info_t *info)
 	}
 	else
 	{
-		if ((interactive(info) || ft_getenv(info, "PATH=")
-			|| info->argv[0][0] == '/') && ft_is_cmd(info, info->argv[0]))
+		if ((ft_interactive(info) || ft_getenv(info, "PATH=")
+			|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
 			ft_fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
@@ -129,9 +129,10 @@ void ft_fork_cmd(info_t *info)
 {
 	pid_t child_pid;
 
-	child_pid = ft_fork();
+	child_pid = fork();
 	if (child_pid == -1)
 	{
+		/* TODO: PUT ERROR FUNCTION */
 		perror("Error:");
 		return;
 	}
@@ -139,11 +140,12 @@ void ft_fork_cmd(info_t *info)
 	{
 		if (execve(info->path, info->argv, ft_get_environ(info)) == -1)
 		{
-			free_info(info, 1);
+			ft_free_info(info, 1);
 			if (errno == EACCES)
 				exit(126);
 			exit(1);
 		}
+		/* TODO: PUT ERROR FUNCTION */
 	}
 	else
 	{

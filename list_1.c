@@ -1,4 +1,5 @@
 #include "shell.h"
+
 /**
  * ft_list_len - determines length of linked list
  * @h: pointer to first node
@@ -23,11 +24,10 @@ size_t ft_list_len(const list_t *h)
  *
  * Return: array of strings
  */
-
 char **ft_list_to_strings(list_t *head)
 {
 	list_t *node = head;
-	size_t i = ft_list_len(head), j;
+	size_t i = list_len(head), j;
 	char **strs;
 	char *str;
 
@@ -38,7 +38,7 @@ char **ft_list_to_strings(list_t *head)
 		return (NULL);
 	for (i = 0; node; node = node->next, i++)
 	{
-		str = malloc(ft_strlen(node->str) + 1);
+		str = malloc(_strlen(node->str) + 1);
 		if (!str)
 		{
 			for (j = 0; j < i; j++)
@@ -46,12 +46,14 @@ char **ft_list_to_strings(list_t *head)
 			free(strs);
 			return (NULL);
 		}
+
 		str = ft_strcpy(str, node->str);
 		strs[i] = str;
 	}
 	strs[i] = NULL;
 	return (strs);
 }
+
 
 /**
  * ft_print_list - prints all elements of a list_t linked list
@@ -96,4 +98,25 @@ list_t *ft_node_starts_with(list_t *node, char *prefix, char c)
 		node = node->next;
 	}
 	return (NULL);
+}
+
+/**
+ * ft_get_node_index - gets the index of a node
+ * @head: pointer to list head
+ * @node: pointer to the node
+ *
+ * Return: index of node or -1
+ */
+ssize_t ft_get_node_index(list_t *head, list_t *node)
+{
+	size_t i = 0;
+
+	while (head)
+	{
+		if (head == node)
+			return (i);
+		head = head->next;
+		i++;
+	}
+	return (-1);
 }

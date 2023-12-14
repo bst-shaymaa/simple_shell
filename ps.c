@@ -68,7 +68,7 @@ char *ft_find_path(info_t *info, char *pathstr, char *cmd)
 		{
 			path = ft_dup_chars(pathstr, curr_pos, i);
 			if (!*path)
-				ft_strcat(path, cmd);
+				ft__strcat(path, cmd);
 			else
 			{
 				ft_strcat(path, "/");

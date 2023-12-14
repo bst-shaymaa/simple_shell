@@ -1,96 +1,23 @@
 #include "shell.h"
 
 /**
- **ft_strncpy - copies a string
- *@dest: the destination string to be copied to
- *@src: the source string
- *@n: the amount of characters to be copied
- *Return: the concatenated string
- */
-char *ft_strncpy(char *dest, char *src, int n)
-{
-	int i, j;
-	char *s = dest;
-
-	i = 0;
-	while (src[i] != '\0' && i < n - 1)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	if (i < n)
-	{
-		j = i;
-		while (j < n)
-		{
-			dest[j] = '\0';
-			j++;
-		}
-	}
-	return (s);
-}
-
-/**
- **ft_strncat - concatenates two strings
- *@dest: the first string
- *@src: the second string
- *@n: the amount of bytes to be maximally used
- *Return: the concatenated string
- */
-char *ft_strncat(char *dest, char *src, int n)
-{
-	int i, j;
-	char *s = dest;
-
-	i = 0;
-	j = 0;
-	while (dest[i] != '\0')
-		i++;
-	while (src[j] != '\0' && j < n)
-	{
-		dest[i] = src[j];
-		i++;
-		j++;
-	}
-	if (j < n)
-		dest[i] = '\0';
-	return (s);
-}
-
-/**
- **ft_strchr - locates a character in a string
- *@str: the string to be parsed
- *@ch: the character to look for
- *Return: (str) a pointer to the memory area str
- */
-char *ft_strchr(char *str, char ch)
-{
-	do {
-		if (*str == ch)
-			return (str);
-	} while (*str++ != '\0');
-
-	return (NULL);
-}
-
-/**
  * **ft_strtow - splits a string into words. Repeat delimiters are ignored
  * @str: the input string
- * @dl: the delimeter string
+ * @d: the delimeter string
  * Return: a pointer to an array of strings, or NULL on failure
  */
 
-char **ft_strtow(char *str, char *dl)
+char **ft_strtow(char *str, char *d)
 {
 	int i, j, k, m, numwords = 0;
 	char **s;
 
 	if (str == NULL || str[0] == 0)
 		return (NULL);
-	if (!dl)
-		dl = " ";
+	if (!d)
+		d = " ";
 	for (i = 0; str[i] != '\0'; i++)
-		if (!ft_is_delim(str[i], dl) && (ft_is_delim(str[i + 1], dl) || !str[i + 1]))
+		if (!ft_is_delim(str[i], d) && (ft_is_delim(str[i + 1], d) || !str[i + 1]))
 			numwords++;
 
 	if (numwords == 0)
@@ -100,10 +27,10 @@ char **ft_strtow(char *str, char *dl)
 		return (NULL);
 	for (i = 0, j = 0; j < numwords; j++)
 	{
-		while (ft_is_delim(str[i], dl))
+		while (ft_is_delim(str[i], d))
 			i++;
 		k = 0;
-		while (!ft_is_delim(str[i + k], dl) && str[i + k])
+		while (!ft_is_delim(str[i + k], d) && str[i + k])
 			k++;
 		s[j] = malloc((k + 1) * sizeof(char));
 		if (!s[j])
