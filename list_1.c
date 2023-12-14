@@ -27,7 +27,7 @@ size_t ft_list_len(const list_t *h)
 char **ft_list_to_strings(list_t *head)
 {
 	list_t *node = head;
-	size_t i = list_len(head), j;
+	size_t i = ft_list_len(head), j;
 	char **strs;
 	char *str;
 
@@ -38,7 +38,7 @@ char **ft_list_to_strings(list_t *head)
 		return (NULL);
 	for (i = 0; node; node = node->next, i++)
 	{
-		str = malloc(_strlen(node->str) + 1);
+		str = malloc(ft_strlen(node->str) + 1);
 		if (!str)
 		{
 			for (j = 0; j < i; j++)
@@ -67,7 +67,7 @@ size_t ft_print_list(const list_t *h)
 
 	while (h)
 	{
-		ft_puts(convert_number(h->num, 10, 0));
+		ft_puts(ft_convert_number(h->num, 10, 0));
 		ft_putchar(':');
 		ft_putchar(' ');
 		ft_puts(h->str ? h->str : "(nil)");

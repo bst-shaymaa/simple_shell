@@ -13,7 +13,7 @@ int ft_myexit(info_t *info)
 
 	if (info->argv[1])  /* If there is an exit arguement */
 	{
-		exitcheck = _erratoi(info->argv[1]);
+		exitcheck = ft_erratoi(info->argv[1]);
 		if (exitcheck == -1)
 		{
 			info->status = 2;
@@ -151,7 +151,7 @@ int ft_set_alias(info_t *info, char *str)
 		return (ft_unset_alias(info, str));
 
 	ft_unset_alias(info, str);
-	return (add_node_end(&(info->alias), str, 0) == NULL);
+	return (ft_add_node_end(&(info->alias), str, 0) == NULL);
 }
 
 /**

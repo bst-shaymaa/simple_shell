@@ -58,7 +58,7 @@ ssize_t ft_get_input(info_t *info)
 	char **buf_p = &(info->arg), *p;
 
 	ft_putchar(BUF_FLUSH);
-	r = input_buf(info, &buf, &len);
+	r = ft_input_buf(info, &buf, &len);
 	if (r == -1) /* EOF */
 		return (-1);
 	if (len)	/* we have commands left in the chain buffer */
@@ -66,7 +66,7 @@ ssize_t ft_get_input(info_t *info)
 		j = i; /* init new iterator to current buf position */
 		p = buf + i; /* get pointer for return */
 
-		check_chain(info, buf, &j, i, len);
+		ft_check_chain(info, buf, &j, i, len);
 		while (j < len) /* iterate to semicolon or end */
 		{
 			if (ft_is_chain(info, buf, &j))
@@ -131,7 +131,7 @@ int ft_getline(info_t *info, char **ptr, size_t *length)
 	if (i == len)
 		i = len = 0;
 
-	r = read_buf(info, buf, &len);
+	r = ft_read_buf(info, buf, &len);
 	if (r == -1 || (r == 0 && len == 0))
 		return (-1);
 

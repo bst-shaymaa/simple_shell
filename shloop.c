@@ -26,9 +26,9 @@ int ft_hsh(info_t *info, char **av)
 			if (builtin_ret == -1)
 				ft_find_cmd(info);
 		}
-		else if (interactive(info))
+		else if (ft_interactive(info))
 			ft_putchar('\n');
-		free_info(info, 0);
+		ft_free_info(info, 0);
 	}
 	ft_write_history(info);
 	ft_free_info(info, 1);
@@ -109,7 +109,7 @@ void ft_find_cmd(info_t *info)
 	else
 	{
 		if ((ft_interactive(info) || ft_getenv(info, "PATH=")
-			|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
+			|| info->argv[0][0] == '/') && ft_is_cmd(info, info->argv[0]))
 			ft_fork_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
