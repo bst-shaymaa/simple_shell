@@ -104,7 +104,7 @@ int ft_myhelp(info_t *info)
  *        constant function prototype.
  *  Return: Always 0
  */
-int ft__myhistory(info_t *info)
+int ft_myhistory(info_t *info)
 {
 	ft_print_list(info->history);
 	return (0);
